@@ -1,38 +1,94 @@
-# 🔑 PBKDF2 Key Tool
+# 🔑 Crypto no Jutsu
 
-A command-line utility for deriving and verifying cryptographic keys using PBKDF2 (SHA-256). Supports key generation, password verification, file saving/loading, and custom parameters.
+*A command-line ninjutsu for mastering cryptographic keys.*
+
+This tool lets you **derive**, **verify**, and **manage cryptographic keys** using PBKDF2-HMAC with SHA-256.
+Think of it as your **chakra control training**—but for passwords and keys. ⚡
+
+---
 
 ## 🚀 Features
 
-- 🔒 Derive secure keys from passwords and salt
-- ✅ Verify passwords against stored keys
-- 📝 Save/load Base64 keys from files
-- ⚙️ Custom key length & iterations
+* 🔒 **Derive secure keys** from password + salt
+* ✅ **Verify** a password against a stored Base64 key
+* 📝 **Save / load keys** from files
+* ⚙️ **Custom parameters**: key length & iteration count
+
+---
 
 ## 🛠️ Usage
 
-**Derive a key:**
+### Derive a new key
+
 ```bash
-python pbkdf2_key_tool.py --derive
+python crypto_no_jutsu.py --derive
 ```
 
-**Verify a key:**
+You’ll be prompted for:
+
+* **Salt** (hidden input)
+* **Password** (hidden input)
+* Confirmation to **save or just print** the key
+
+---
+
+### Verify an existing key
+
 ```bash
-python pbkdf2_key_tool.py --verify --key "<Base64Key>"
+python crypto_no_jutsu.py --verify --key "<Base64Key>"
 ```
 
-**Options:**
-- `--length`: Key length (bytes, default: 128)
-- `--iterations`: PBKDF2 iterations (default: 1,200,000)
-- `--key`: Base64 key for verification
-- `--path`: File path for stored key
+or verify from a file:
+
+```bash
+python crypto_no_jutsu.py --verify --path derived_key.txt
+```
+
+---
+
+### Options
+
+* `--length` → Key length in bytes (default: `128`)
+* `--iterations` → PBKDF2 iterations (default: `1,200,000`)
+* `--key` → Base64 key string (for `--verify`)
+* `--path` → File path to load stored key
+
+---
 
 ## 📦 Requirements
 
-- Python 3.7+
-- cryptography library (`pip install cryptography`)
+* Python **3.7+**
+* Install dependencies:
+
+  ```bash
+  pip install cryptography
+  ```
+
+---
 
 ## 🛡️ Security Tips
 
-- Use strong, random salts
-- Never share your password or salt
+* 🧂 Always use a **strong, unique salt** per password
+* 🔑 Keep derived keys **private and secure**
+* 🚫 Never hardcode or share your password/salt
+* 🔄 Consider rotating keys regularly
+
+---
+
+## 🌸 Example Workflow
+
+1. Derive a new key:
+
+   ```bash
+   python crypto_no_jutsu.py --derive
+   ```
+2. Save it into `mykeys.txt`
+3. Later, verify a password:
+
+   ```bash
+   python crypto_no_jutsu.py --verify --path mykeys.txt
+   ```
+
+---
+
+✨ Now you can wield **crypto-no-jutsu** to protect your secrets like a true shinobi.
