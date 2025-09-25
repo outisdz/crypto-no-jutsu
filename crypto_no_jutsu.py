@@ -34,12 +34,7 @@ def derive_key(key_length, iterations):
     salt = getpass.getpass('Enter the salt: ').encode()
     password = getpass.getpass('Enter your password: ').encode()
 
-    kdf = PBKDF2HMAC(
-        hashes.SHA256(),
-        length=key_length,
-        salt=salt,
-        iterations=iterations
-    )
+    kdf = PBKDF2HMAC(hashes.SHA256(), length=key_length, salt=salt, iterations=iterations)
     derived_key_b64 = base64.b64encode(kdf.derive(password)).decode()
     return derived_key_b64
 
@@ -51,12 +46,7 @@ def verify_key(stored_key_b64: bytes, key_length, iterations):
     salt = getpass.getpass('Enter the salt: ').encode()
     password = getpass.getpass('Enter your password: ').encode()
 
-    kdf = PBKDF2HMAC(
-        hashes.SHA256(),
-        length=key_length,
-        salt=salt,
-        iterations=iterations
-    )
+    kdf = PBKDF2HMAC(hashes.SHA256(), length=key_length, salt=salt, iterations=iterations)
     try:
         kdf.verify(password, base64.b64decode(stored_key_b64))
         print('✅ Key verification successful')
@@ -95,8 +85,15 @@ if __name__ == '__main__':
         # Derive a new key
         derived_key_b64 = derive_key(key_length, iterations)
         if confirm_prompt("Do you want to save the key to a file?"):
-            with open('derived_key.txt', 'w') as file:
-                file.write(derived_key_b64)
-            print("Key saved to derived_key.txt")
+            file_path = input("Enter file name [default: derived_key.txt]: ").strip()
+            if not file_path:
+                file_path = "derived_key.txt"
+            try:
+                with open(file_path, 'w') as file:
+                    file.write(derived_key_b64)
+                print(f"✅ Key saved to {file_path}")
+            except Exception as e:
+                print(f"❌ Failed to save key: {e}")
         else:
-            print('Derived key (Base64):', derived_key_b64)
+            # Just display the key if not saving
+            print("Derived key (Base64):", derived_key_b64)
