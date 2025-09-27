@@ -10,7 +10,7 @@ Think of it as your **chakra control training**—but for passwords and keys. �
 ## 🚀 Features
 
 * 🔒 **Derive secure keys** from password + salt
-* ✅ **Verify** a password against a stored Base64 key
+* ✅ **Verify** a password against a stored Base85 key
 * 📝 **Save / load keys** from files
 * ⚙️ **Custom parameters**: key length & iteration count
 
@@ -35,7 +35,7 @@ You’ll be prompted for:
 ### Verify an existing key
 
 ```bash
-python crypto_no_jutsu.py --verify --key "<Base64Key>"
+python crypto_no_jutsu.py --verify --key "<Base85Key>"
 ```
 
 or verify from a file:
