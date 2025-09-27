@@ -16,6 +16,23 @@ Think of it as your **chakra control training**—but for passwords and keys. �
 
 ---
 
+## 🛡️ Recommended PBKDF2-HMAC Parameters
+
+Choose parameters based on your threat model and needs:
+
+| Scenario                  | Iterations      | Key Length (bytes) | Salt Length (bytes) | Notes                                           |
+|---------------------------|-----------------|--------------------|---------------------|-------------------------------------------------|
+| Normal                    | 600,000–1,200,000   | 64–128           | 16–32              | Good protection for everyday use                |
+| Journalist/Whistleblower  | 2,000,000–5,000,000 | 128              | 32                  | Higher cost for attackers, strong salt required |
+| Life-and-Death            | 10,000,000+        | 128–256           | 32+                 | Maximum security, may impact performance        |
+
+- **More iterations** = Slower brute-force attacks, but slower for you too.
+- **Longer salts** prevent rainbow table and precomputation attacks.
+- **Key length**: 128 bytes is strong for most uses; 256 bytes for extreme cases.
+- Always use a *unique* salt per password/key!
+
+---
+
 ## 🛠️ Usage
 
 ### Derive a new key
