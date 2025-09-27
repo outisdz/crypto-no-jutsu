@@ -1,3 +1,8 @@
+<!-- GITHUB BANNER -->
+<p align="center">
+  <img src="assets/Crypto-Ninja.png" alt="crypto no jutsu banner" width="100%"/>
+</p>
+
 # 🔑 Crypto no Jutsu
 
 *A command-line ninjutsu for mastering cryptographic keys.*
