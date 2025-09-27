@@ -12,8 +12,8 @@ def parse_arguments():
     Supports key verification or key derivation mode.
     """
     parser = argparse.ArgumentParser(description="PBKDF2 key derivation and verification tool")
-    parser.add_argument('--key', type=str, help='Provide the Base64-encoded key directly')
-    parser.add_argument('--path', type=str, help='Path to a file containing the Base64-encoded key')
+    parser.add_argument('--key', type=str, help='Provide the Base85-encoded key directly')
+    parser.add_argument('--path', type=str, help='Path to a file containing the Base85-encoded key')
 
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-v', '--verify', action='store_true', help='Verify a password against a stored key')
@@ -28,27 +28,27 @@ def parse_arguments():
 
 def derive_key(key_length, iterations):
     """
-    Derive a Base64-encoded key using PBKDF2 with SHA-256.
+    Derive a Base85-encoded key using PBKDF2 with SHA-256.
     Asks the user for a salt and password.
     """
     salt = getpass.getpass('Enter the salt: ').encode()
     password = getpass.getpass('Enter your password: ').encode()
 
     kdf = PBKDF2HMAC(hashes.SHA256(), length=key_length, salt=salt, iterations=iterations)
-    derived_key_b64 = base64.b64encode(kdf.derive(password)).decode()
-    return derived_key_b64
+    derived_key_b85 = base64.b85encode(kdf.derive(password)).decode()
+    return derived_key_b85
 
 
-def verify_key(stored_key_b64: bytes, key_length, iterations):
+def verify_key(stored_key_b85: bytes, key_length, iterations):
     """
-    Verify a stored Base64-encoded key against a password and salt.
+    Verify a stored Base85-encoded key against a password and salt.
     """
     salt = getpass.getpass('Enter the salt: ').encode()
     password = getpass.getpass('Enter your password: ').encode()
 
     kdf = PBKDF2HMAC(hashes.SHA256(), length=key_length, salt=salt, iterations=iterations)
     try:
-        kdf.verify(password, base64.b64decode(stored_key_b64))
+        kdf.verify(password, base64.b85decode(stored_key_b85))
         print('✅ Key verification successful')
     except InvalidKey:
         print('❌ Invalid key - password or salt does not match')
@@ -83,17 +83,17 @@ if __name__ == '__main__':
 
     elif args.derive:
         # Derive a new key
-        derived_key_b64 = derive_key(key_length, iterations)
+        derived_key_b85 = derive_key(key_length, iterations)
         if confirm_prompt("Do you want to save the key to a file?"):
             file_path = input("Enter file name [default: derived_key.txt]: ").strip()
             if not file_path:
                 file_path = "derived_key.txt"
             try:
                 with open(file_path, 'w') as file:
-                    file.write(derived_key_b64)
+                    file.write(derived_key_b85)
                 print(f"✅ Key saved to {file_path}")
             except Exception as e:
                 print(f"❌ Failed to save key: {e}")
         else:
             # Just display the key if not saving
-            print("Derived key (Base64):", derived_key_b64)
+            print("Derived key (Base85):", derived_key_b85)
