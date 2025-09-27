@@ -12,12 +12,13 @@ def parse_arguments():
     Supports key verification or key derivation mode.
     """
     parser = argparse.ArgumentParser(description="PBKDF2 key derivation and verification tool")
-    parser.add_argument('-k','--key', type=str, help='Provide the Base85-encoded key directly')
-    parser.add_argument('-p','--path', type=str, help='Path to a file containing the Base85-encoded key')
-
+    
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-v', '--verify', action='store_true', help='Verify a password against a stored key')
     group.add_argument('-d', '--derive', action='store_true', help='Derive a new key from a password and salt')
+
+    parser.add_argument('-k','--key', type=str, help='Provide the Base85-encoded key directly')
+    parser.add_argument('-p','--path', type=str, help='Path to a file containing the Base85-encoded key')
 
     # Key derivation parameters
     parser.add_argument('-l','--length', type=int, default=128, help='Length of the derived key (bytes)')
