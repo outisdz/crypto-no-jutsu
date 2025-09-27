@@ -21,7 +21,7 @@ def parse_arguments():
 
     # Key derivation parameters
     parser.add_argument('-l','--length', type=int, default=128, help='Length of the derived key (bytes)')
-    parser.add_argument('-i','--iterations', type=int, default=1_200_000, help='Number of PBKDF2 iterations')
+    parser.add_argument('-i','--iterations', type=int, default=2_000_000, help='Number of PBKDF2 iterations')
 
     return parser.parse_args()
 

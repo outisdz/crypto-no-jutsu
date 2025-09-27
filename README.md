@@ -66,7 +66,7 @@ python crypto_no_jutsu.py --verify --path derived_key.txt
 ### Options
 
 * `--length` → Key length in bytes (default: `128`)
-* `--iterations` → PBKDF2 iterations (default: `1,200,000`)
+* `--iterations` → PBKDF2 iterations (default: `2,000,000`)
 * `--key` → Base85 key string (for `--verify`)
 * `--path` → File path to load stored key
 
